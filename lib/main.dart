@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 /* starting code */
@@ -17,66 +19,55 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            backgroundColor: Colors.teal,
-            body: SafeArea(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage("images/nothing.jpg"),
-                ),
-                const Text(
-                  "Body Guard",
-                  style: TextStyle(
-                      fontSize: 32.0,
-                      color: Colors.white,
-                      fontFamily: 'Pacifico'),
-                ),
-                Text(
-                  "MOBILE DEVELOPER",
-                  style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.teal[100],
-                      fontFamily: 'Source Sans Pro',
-                      letterSpacing: 2.5,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  width: 180,
-                  height: 24,
-                  child: Divider(color: Colors.teal[100]),
-                ),
-                Card(
-                    color: Colors.white,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 16),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.add_shopping_cart,
-                        color: Colors.teal[900],
-                      ),
-                      title: Text(
-                        "+976) 91192825",
-                        style: TextStyle(color: Colors.teal[900], fontSize: 16),
-                      ),
-                    )),
-                Card(
-                  color: Colors.white,
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.email_outlined,
-                      color: Colors.teal[900],
-                    ),
-                    title: Text("jakleito70@gmail.com",
-                        style:
-                            TextStyle(color: Colors.teal[900], fontSize: 16)),
-                  ),
-                )
-              ],
-            ))));
+      home: Scaffold(
+        backgroundColor: Colors.deepPurple[500],
+        appBar: AppBar(
+          title: const Text("Dice game"),
+          backgroundColor: Colors.indigo[700],
+        ),
+        body: const DicePage(),
+      ),
+    );
+  }
+}
+
+class DicePage extends StatefulWidget {
+  const DicePage({super.key});
+
+  @override
+  State<DicePage> createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+  void changeCondition() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDiceNumber = Random().nextInt(6) + 1;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // build method
+    return Center(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: TextButton(
+              child: Image.asset('images/dice-$leftDiceNumber.png'),
+              onPressed: changeCondition,
+            ),
+          ),
+          Expanded(
+            child: TextButton(
+              child: Image.asset('images/dice-$rightDiceNumber.png'),
+              onPressed: changeCondition,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
